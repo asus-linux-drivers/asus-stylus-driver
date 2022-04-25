@@ -4,6 +4,7 @@ Tested only with **ASUS-PEN-SA201H**.
 
 ## TODO:
 
+- [x] (First button as middle click)
 - [x] (Second button as right click)
 
 <br/>
