@@ -74,11 +74,12 @@ fcntl(fd_t, F_SETFL, os.O_NONBLOCK)
 d_t = Device(fd_t)
 
 
-# Create a new device to send right clicks
+# Create a new device to send right clickss
 
 dev = Device()
 dev.name = "Asus Stylus"
 dev.enable(EV_KEY.BTN_RIGHT)
+dev.enable(EV_KEY.BTN_MIDDLE)
 dev.enable(EV_SYN.SYN_REPORT)
 dev.enable(EV_MSC.MSC_SCAN)
 
@@ -99,15 +100,34 @@ while True:
         ):
             log.debug(e)
 
-        # Pen's button - first one closer to spike:
+        # Pen's first button (closer to spike) - mapped as middle click:
         #
         # 0 then immediately 1
         elif (
             e.matches(EV_KEY.BTN_TOOL_RUBBER)
         ):
+
+            if e.value == 1:
+                events = [
+                    InputEvent(EV_MSC.MSC_SCAN, 589827),
+                    InputEvent(EV_KEY.BTN_MIDDLE, e.value),
+                    InputEvent(EV_SYN.SYN_REPORT, 0),
+                ]
+            else:
+                events = [
+                    InputEvent(EV_MSC.MSC_SCAN, 589827),
+                    InputEvent(EV_KEY.BTN_MIDDLE, e.value),
+                    InputEvent(EV_SYN.SYN_REPORT, 0),
+                ]
+
+            try:
+                udev.send_events(events)
+            except OSError as err:
+                log.warning("Cannot send event, %s", err)
+
             log.debug(e)
 
-        # Pen's button - second one mapped as right click:
+        # Pen's second button - mapped as right click:
         #
         # 0 then immediately 1
         elif (
@@ -123,7 +143,7 @@ while True:
             else:
                 events = [
                     InputEvent(EV_MSC.MSC_SCAN, 589826),
-                    InputEvent(EV_KEY.BTN_RIGHT, 0),
+                    InputEvent(EV_KEY.BTN_RIGHT, e.value),
                     InputEvent(EV_SYN.SYN_REPORT, 0),
                 ]
 
