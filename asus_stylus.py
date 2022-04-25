@@ -70,7 +70,6 @@ while tries > 0:
 # Start monitoring the stylus
 
 fd_t = open('/dev/input/event' + str(stylus), 'rb')
-fcntl(fd_t, F_SETFL, os.O_NONBLOCK)
 d_t = Device(fd_t)
 
 
@@ -153,5 +152,3 @@ while True:
                 log.warning("Cannot send event, %s", err)
         else:
             log.debug(e)
-
-    sleep(0.1)
