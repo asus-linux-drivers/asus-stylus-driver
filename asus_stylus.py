@@ -11,8 +11,8 @@ from typing import Optional
 from libevdev import EV_KEY, EV_SYN, EV_MSC, Device, InputEvent
 
 # Setup logging
-# LOG=DEBUG sudo -E ./asus-stylus-numpad-driver  # all messages
-# LOG=ERROR sudo -E ./asus-stylus-numpad-driver  # only error messages
+# LOG=DEBUG sudo -E ./asus_stylus.py  # all messages
+# LOG=ERROR sudo -E ./asus_stylus.py  # only error messages
 logging.basicConfig()
 log = logging.getLogger('Pen')
 log.setLevel(os.environ.get('LOG', 'INFO'))
@@ -89,20 +89,29 @@ while True:
     # If stylus sends something
     for e in d_t.events():
 
+        log.debug(e)
+
+        # Ignore others events
+        if not (
+            e.matches(EV_KEY.BTN_TOOL_RUBBER) or
+            e.matches(EV_KEY.BTN_STYLUS)
+        ):
+            continue
 
         # Pen's distance tracker:
         #
         # 1 is send when was entered ZONE closer to laptop screen where is stylus active
         # 0 is send when was entered ZONE where is stylus disabled
-        if (
-            e.matches(EV_KEY.BTN_TOOL_PEN)
-        ):
-            log.debug(e)
+        #if (
+        #    e.matches(EV_KEY.BTN_TOOL_PEN)
+        #):
+        #    log.debug(e)
 
         # Pen's first button (closer to spike) - mapped as middle click:
         #
         # 0 then immediately 1
-        elif (
+        #elif (
+        if (
             e.matches(EV_KEY.BTN_TOOL_RUBBER)
         ):
 
@@ -122,9 +131,7 @@ while True:
             try:
                 udev.send_events(events)
             except OSError as err:
-                log.warning("Cannot send event, %s", err)
-
-            log.debug(e)
+                log.error("Cannot send event, %s", err)
 
         # Pen's second button - mapped as right click:
         #
@@ -149,6 +156,4 @@ while True:
             try:
                 udev.send_events(events)
             except OSError as err:
-                log.warning("Cannot send event, %s", err)
-        else:
-            log.debug(e)
+                log.error("Cannot send event, %s", err)
