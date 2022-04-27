@@ -14,6 +14,5 @@ while(not device):
     else:
         device = True
 
-
 for e in d.events():
     print(e)
