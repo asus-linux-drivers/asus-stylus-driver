@@ -1,6 +1,6 @@
 # Asus stylus driver
 
-Tested only with **ASUS-PEN-SA201H**.
+**Tested only on laptop Asus ZenBook UP5401EA** with type of Asus Pen ****ASUS-PEN-SA201H** and system Elementary OS 6.1 Loki.
 
 ## TODO:
 
@@ -8,9 +8,6 @@ Tested only with **ASUS-PEN-SA201H**.
 - [x] (Second button as right click)
 
 <br/>
-
-This python driver has been tested and works fine for these asus pen versions at the moment:
-- ASUS PEN SA201H (delivered with ASUS Zenbook 14 Flip OLED UP5401EA-OLED024T Pine Grey)
 
 Install required packages
 
@@ -60,4 +57,6 @@ For some operating systems with boot failure (Pop!OS, Mint, ElementaryOS, SolusO
 # ExecStartPre=/bin/sleep 2
 ```
 
-Thank you very much [github.com/mohamed-badaoui](github.com/mohamed-badaoui) and all the contributors of [asus-touchpad-numpad-driver](https://github.com/mohamed-badaoui/asus-touchpad-numpad-driver) for inspiration.
+## Credits
+
+Thank you very much [github.com/mohamed-badaoui](github.com/mohamed-badaoui) and all the contributors of [asus-touchpad-numpad-driver](https://github.com/mohamed-badaoui/asus-touchpad-numpad-driver) for your work.
