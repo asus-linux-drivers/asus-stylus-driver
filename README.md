@@ -9,7 +9,7 @@ Tested only with **ASUS-PEN-SA201H**.
 
 <br/>
 
-This python driver has been tested and works fine for these asus versions at the moment:
+This python driver has been tested and works fine for these asus pen versions at the moment:
 - ASUS PEN SA201H (delivered with ASUS Zenbook 14 Flip OLED UP5401EA-OLED024T Pine Grey)
 
 Install required packages
