@@ -60,3 +60,7 @@ For some operating systems with boot failure (Pop!OS, Mint, ElementaryOS, SolusO
 ## Credits
 
 Thank you very much [github.com/mohamed-badaoui](github.com/mohamed-badaoui) and all the contributors of [asus-touchpad-numpad-driver](https://github.com/mohamed-badaoui/asus-touchpad-numpad-driver) for your work.
+
+## Developing
+
+**During debugging rebember to disable service / uninstall already installed version of driver**
