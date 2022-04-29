@@ -6,6 +6,7 @@
 
 - [x] (First button as middle click)
 - [x] (Second button as right click)
+- [ ] (Do not display battery low 1%)
 
 <br/>
 
