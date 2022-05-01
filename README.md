@@ -6,7 +6,7 @@
 
 - [x] (First button as middle click)
 - [x] (Second button as right click)
-- [ ] (Do not display battery low 1%)
+- [ ] (Do not display battery low 1%, https://gitlab.gnome.org/GNOME/gnome-power-manager/-/issues/23)
 
 <br/>
 
