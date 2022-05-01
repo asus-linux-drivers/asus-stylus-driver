@@ -3,7 +3,7 @@ Description=Asus Stylus Handler
 
 [Service]
 Type=simple
-ExecStart=/usr/share/asus_stylus-driver/asus_stylus.py $LAYOUT $PERCENTAGE_KEY
+ExecStart=/usr/share/asus_stylus-driver/asus_stylus.py
 StandardInput=tty-force
 StandardOutput=/var/log/asus_stylus-driver/error.log
 StandardError=/var/log/asus_stylus-driver/error.log
