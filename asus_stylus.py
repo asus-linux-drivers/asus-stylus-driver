@@ -4,8 +4,6 @@ import logging
 import os
 import re
 import sys
-from fcntl import F_SETFL, fcntl
-from time import sleep
 from typing import Optional
 
 from libevdev import EV_KEY, EV_SYN, EV_MSC, Device, InputEvent
@@ -115,18 +113,11 @@ while True:
             e.matches(EV_KEY.BTN_TOOL_RUBBER)
         ):
 
-            if e.value == 1:
-                events = [
-                    InputEvent(EV_MSC.MSC_SCAN, 589827),
-                    InputEvent(EV_KEY.BTN_MIDDLE, e.value),
-                    InputEvent(EV_SYN.SYN_REPORT, 0),
-                ]
-            else:
-                events = [
-                    InputEvent(EV_MSC.MSC_SCAN, 589827),
-                    InputEvent(EV_KEY.BTN_MIDDLE, e.value),
-                    InputEvent(EV_SYN.SYN_REPORT, 0),
-                ]
+            events = [
+                InputEvent(EV_MSC.MSC_SCAN, 589827),
+                InputEvent(EV_KEY.BTN_MIDDLE, e.value),
+                InputEvent(EV_SYN.SYN_REPORT, 0),
+            ]
 
             try:
                 udev.send_events(events)
@@ -140,18 +131,11 @@ while True:
             e.matches(EV_KEY.BTN_STYLUS)
         ):
 
-            if e.value == 1:
-                events = [
-                    InputEvent(EV_MSC.MSC_SCAN, 589826),
-                    InputEvent(EV_KEY.BTN_RIGHT, e.value),
-                    InputEvent(EV_SYN.SYN_REPORT, 0),
-                ]
-            else:
-                events = [
-                    InputEvent(EV_MSC.MSC_SCAN, 589826),
-                    InputEvent(EV_KEY.BTN_RIGHT, e.value),
-                    InputEvent(EV_SYN.SYN_REPORT, 0),
-                ]
+            events = [
+                InputEvent(EV_MSC.MSC_SCAN, 589826),
+                InputEvent(EV_KEY.BTN_RIGHT, e.value),
+                InputEvent(EV_SYN.SYN_REPORT, 0),
+            ]
 
             try:
                 udev.send_events(events)
