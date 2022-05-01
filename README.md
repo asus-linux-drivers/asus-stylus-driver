@@ -65,3 +65,5 @@ Thank you very much [github.com/mohamed-badaoui](github.com/mohamed-badaoui) and
 ## Developing
 
 **During debugging rebember to disable service / uninstall already installed version of driver**
+
+## Existing similar projects
