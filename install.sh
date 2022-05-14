@@ -31,12 +31,42 @@ then
     exit 1
 fi
 
-echo "Add asus stylus service in /etc/systemd/system/"
-cat asus_stylus.service > /etc/systemd/system/asus_stylus.service
 
-mkdir -p /usr/share/asus_stylus-driver/
+if [[ -d stylus_layouts/__pycache__ ]] ; then
+    rm -rf stylus_layouts/__pycache__
+fi
+
+
+echo
+echo "Select key mapping layout:"
+echo
+echo "Default mapping is button closer to spike as middle click and second button as right click"
+echo
+PS3='Please enter your choice '
+options=($(ls stylus_layouts) "Quit")
+select opt in "${options[@]}"
+do
+    opt=${opt::-3}
+    case $opt in
+        "default" )
+            layout=default
+            break
+            ;;
+        "Q")
+            exit 0
+            ;;
+        *)
+            echo "invalid option $REPLY";;
+    esac
+done
+
+echo "Add asus stylus service in /etc/systemd/system/"
+cat asus_stylus.service | LAYOUT=$layout envsubst '$LAYOUT' > /etc/systemd/system/asus_stylus.service
+
+mkdir -p /usr/share/asus_stylus-driver/stylus_layouts
 mkdir -p /var/log/asus_stylus-driver
 install asus_stylus.py /usr/share/asus_stylus-driver/
+install -t /usr/share/asus_stylus-driver/stylus_layouts stylus_layouts/*.py
 
 echo "i2c-dev" | tee /etc/modules-load.d/i2c-dev.conf >/dev/null
 

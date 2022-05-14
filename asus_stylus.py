@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import importlib
 import logging
 import os
 import re
@@ -15,6 +16,11 @@ logging.basicConfig()
 log = logging.getLogger('Pen')
 log.setLevel(os.environ.get('LOG', 'INFO'))
 
+layout_name = 'default'
+if len(sys.argv) > 1:
+    layout_name = sys.argv[1]
+
+layout = importlib.import_module('stylus_layouts.'+ layout_name)
 
 # Figure out device from devices file
 stylus: Optional[str] = None
@@ -75,12 +81,38 @@ d_t = Device(fd_t)
 
 dev = Device()
 dev.name = "Asus Stylus"
-dev.enable(EV_KEY.BTN_RIGHT)
-dev.enable(EV_KEY.BTN_MIDDLE)
+for key_mapping in layout.keys:
+    dev.enable(key_mapping[2])
 dev.enable(EV_SYN.SYN_REPORT)
 dev.enable(EV_MSC.MSC_SCAN)
 
 udev = dev.create_uinput_device()
+
+def pressed_bound_key(e, key_mapping):
+    key_events = []
+    key_events.append(InputEvent(EV_MSC.MSC_SCAN, key_mapping[1]))
+    for key in key_mapping[2:]:
+        key_events.append(InputEvent(key, e.value))
+
+    sync_event = [
+        InputEvent(EV_SYN.SYN_REPORT, 0)
+    ]
+
+    try:
+        udev.send_events(key_events)
+        udev.send_events(sync_event)
+        if e.value:
+            log.info("Caught key: ")
+            log.info(key_mapping[0])
+            log.info("Pressed key: ")
+            log.info(key_mapping[2])
+        else:
+            log.info("Caught key: ")
+            log.info(key_mapping[0])
+            log.info("Unpressed key: ")
+            log.info(key_mapping[2])
+    except OSError as e:
+        log.error("Cannot send event, %s", e)
 
 while True:
 
@@ -89,55 +121,7 @@ while True:
 
         log.debug(e)
 
-        # Ignore others events
-        if not (
-            e.matches(EV_KEY.BTN_TOOL_RUBBER) or
-            e.matches(EV_KEY.BTN_STYLUS)
-        ):
-            continue
-
-        # Pen's distance tracker:
-        #
-        # 1 is send when was entered ZONE closer to laptop screen where is stylus active
-        # 0 is send when was entered ZONE where is stylus disabled
-        #if (
-        #    e.matches(EV_KEY.BTN_TOOL_PEN)
-        #):
-        #    log.debug(e)
-
-        # Pen's first button (closer to spike) - mapped as middle click:
-        #
-        # 0 then immediately 1
-        #elif (
-        if (
-            e.matches(EV_KEY.BTN_TOOL_RUBBER)
-        ):
-
-            events = [
-                InputEvent(EV_MSC.MSC_SCAN, 589827),
-                InputEvent(EV_KEY.BTN_MIDDLE, e.value),
-                InputEvent(EV_SYN.SYN_REPORT, 0),
-            ]
-
-            try:
-                udev.send_events(events)
-            except OSError as err:
-                log.error("Cannot send event, %s", err)
-
-        # Pen's second button - mapped as right click:
-        #
-        # 0 then immediately 1
-        elif (
-            e.matches(EV_KEY.BTN_STYLUS)
-        ):
-
-            events = [
-                InputEvent(EV_MSC.MSC_SCAN, 589826),
-                InputEvent(EV_KEY.BTN_RIGHT, e.value),
-                InputEvent(EV_SYN.SYN_REPORT, 0),
-            ]
-
-            try:
-                udev.send_events(events)
-            except OSError as err:
-                log.error("Cannot send event, %s", err)
+        # Is this event binded to key?
+        for key_mapping in layout.keys:
+            if e.matches(key_mapping[0]):
+                pressed_bound_key(e, key_mapping)
