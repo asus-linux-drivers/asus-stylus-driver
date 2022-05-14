@@ -6,7 +6,9 @@
 
 - [x] (First button as middle click)
 - [x] (Second button as right click)
+- [x] (Configurable support of left & right key mappings)
 - [ ] (Do not display battery low 1%, https://gitlab.gnome.org/GNOME/gnome-power-manager/-/issues/23)
+
 
 <br/>
 
