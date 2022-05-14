@@ -1,6 +1,6 @@
 # Asus stylus driver
 
-**Tested only on laptop Asus ZenBook UP5401EA** with type of Asus Pen ****ASUS-PEN-SA201H** and system Elementary OS 6.1 Loki.
+**Tested only on laptop Asus ZenBook UP5401EA** with type of Asus Pen **ASUS-PEN-SA201H** and system Elementary OS 6.1 Loki.
 
 ## TODO:
 
