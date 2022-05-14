@@ -69,3 +69,5 @@ Thank you very much [github.com/mohamed-badaoui](github.com/mohamed-badaoui) and
 ## Existing similar projects
 
 I do not know any.
+
+Why was this project created? As supplement driver with added support of configurable stylus buttons.
