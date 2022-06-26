@@ -16,24 +16,17 @@ Install required packages
 
 - Debian / Ubuntu / Linux Mint / Pop!_OS / Zorin OS:
 ```
-sudo apt install libevdev2 python3-libevdev i2c-tools git
+sudo apt install libevdev2 python3-libevdev git
 ```
 
 - Arch Linux / Manjaro:
 ```
-sudo pacman -S libevdev python-libevdev i2c-tools git
+sudo pacman -S libevdev python-libevdev git
 ```
 
 - Fedora:
 ```
-sudo dnf install libevdev python-libevdev i2c-tools git
-```
-
-
-Then enable i2c
-```
-sudo modprobe i2c-dev
-sudo i2cdetect -l
+sudo dnf install libevdev python-libevdev git
 ```
 
 Now you can get the latest ASUS Stylus Driver for Linux from Git and install it using the following commands.
