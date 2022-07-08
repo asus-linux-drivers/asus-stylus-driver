@@ -29,18 +29,24 @@ PS3='Please enter your choice '
 options=($(ls stylus_layouts) "Quit")
 select opt in "${options[@]}"
 do
-    opt=${opt::-3}
-    case $opt in
-        "default" )
-            layout=default
+    if [ "$selected_opt" = "Quit" ]
+    then
+        exit 0
+    fi
+
+    for option in $(ls stylus_layouts);
+    do
+        if [ "$option" = "$selected_opt" ] ; then
+            model=${selected_opt::-3}
             break
-            ;;
-        "Q")
-            exit 0
-            ;;
-        *)
-            echo "invalid option $REPLY";;
-    esac
+        fi
+    done
+
+    if [ -z "$model" ] ; then
+        echo "invalid option $REPLY"
+    else
+        break
+    fi
 done
 
 echo "Add asus stylus service in /etc/systemd/system/"
