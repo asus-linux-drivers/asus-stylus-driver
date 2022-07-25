@@ -27,7 +27,7 @@ echo "Default mapping is button closer to spike as middle click and second butto
 echo
 PS3='Please enter your choice '
 options=($(ls stylus_layouts) "Quit")
-select opt in "${options[@]}"
+select selected_opt in "${options[@]}"
 do
     if [ "$selected_opt" = "Quit" ]
     then
