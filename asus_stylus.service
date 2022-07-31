@@ -5,8 +5,8 @@ Description=Asus Stylus Handler
 Type=simple
 ExecStart=/usr/share/asus_stylus-driver/asus_stylus.py $LAYOUT
 StandardInput=tty-force
-StandardOutput=/var/log/asus_stylus-driver/error.log
-StandardError=/var/log/asus_stylus-driver/error.log
+StandardOutput=append:/var/log/asus_stylus-driver/error.log
+StandardError=append:/var/log/asus_stylus-driver/error.log
 TimeoutSec=5
 Restart=on-failure
 # For some operating systems with boot failure, adding this following property might resolve the issue  
