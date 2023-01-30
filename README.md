@@ -33,7 +33,7 @@ sudo dnf install libevdev python-libevdev git
 
 Now you can get the latest ASUS Stylus Driver for Linux from Git and install it using the following commands.
 ```
-git clone https://github.com/ldrahnik/asus-stylus-driver
+git clone https://github.com/asus-linux-drivers/asus-stylus-driver
 cd asus-stylus-driver
 sudo ./install.sh
 ```
@@ -48,11 +48,6 @@ sudo ./uninstall.sh
 To activate logger, do in a console:
 ```
 LOG=DEBUG sudo -E ./asus_stylus.py
-```
-
-For some operating systems with boot failure (Pop!OS, Mint, ElementaryOS, SolusOS), before installing, please uncomment in the asus_touchpad.service file, this following property and adjust its value:
-```
-# ExecStartPre=/bin/sleep 2
 ```
 
 ## Credits
