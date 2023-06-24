@@ -57,6 +57,15 @@ mkdir -p /var/log/asus_stylus-driver
 install asus_stylus.py /usr/share/asus_stylus-driver/
 install -t /usr/share/asus_stylus-driver/stylus_layouts stylus_layouts/*.py
 
+systemctl daemon-reload
+
+if [[ $? != 0 ]]; then
+    echo "Something went wrong when was called systemctl daemon reload"
+    exit 1
+else
+    echo "Systemctl daemon realod called succesfully"
+fi
+
 systemctl enable asus_stylus
 
 if [[ $? != 0 ]]
