@@ -6,14 +6,6 @@ then
 	exit 1
 fi
 
-#modprobe -r i2c-dev
-#
-#if [[ $? != 0 ]]
-#then
-#	echo "i2c-dev module cannot be removed successfuly..."
-#	exit 1
-#fi
-
 systemctl stop asus_stylus
 if [[ $? != 0 ]]
 then
@@ -47,6 +39,15 @@ if [[ $? != 0 ]]
 then
 	echo "/var/log/asus_stylus-driver cannot be removed correctly..."
 	exit 1
+fi
+
+systemctl daemon-reload
+
+if [[ $? != 0 ]]; then
+    echo "Something went wrong when was called systemctl daemon reload"
+    exit 1
+else
+    echo "Systemctl daemon realod called succesfully"
 fi
 
 echo "Asus stylus python driver uninstalled"
