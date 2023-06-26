@@ -7,7 +7,7 @@ import re
 import sys
 from typing import Optional
 
-from libevdev import EV_KEY, EV_SYN, EV_MSC, Device, InputEvent
+from libevdev import EV_SYN, EV_MSC, Device, InputEvent
 
 # Setup logging
 # LOG=DEBUG sudo -E ./asus_stylus.py  # all messages
@@ -31,7 +31,6 @@ tries = 5
 # Look into the devices file
 while tries > 0:
 
-    #keyboard_detected = 0
     stylus_detected = 0
 
     with open('/proc/bus/input/devices', 'r') as f:
@@ -72,13 +71,11 @@ while tries > 0:
 
 
 # Start monitoring the stylus
-
 fd_t = open('/dev/input/event' + str(stylus), 'rb')
 d_t = Device(fd_t)
 
 
-# Create a new device to send right clickss
-
+# Create a new device
 dev = Device()
 dev.name = "Asus Stylus"
 for key_mapping in layout.keys:
