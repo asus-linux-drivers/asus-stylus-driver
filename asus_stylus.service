@@ -4,7 +4,6 @@ Description=Asus Stylus Handler
 [Service]
 Type=simple
 ExecStart=/usr/bin/env python3 /usr/share/asus_stylus-driver/asus_stylus.py $LAYOUT
-StandardInput=tty-force
 StandardOutput=append:/var/log/asus_stylus-driver/error.log
 StandardError=append:/var/log/asus_stylus-driver/error.log
 TimeoutSec=5
