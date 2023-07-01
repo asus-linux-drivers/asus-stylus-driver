@@ -93,11 +93,11 @@ def pressed_bound_key(e, key_mapping):
 
     sync_event = [
         InputEvent(EV_SYN.SYN_REPORT, 0)
-    ]
+    ]    
+    key_events = key_events + sync_event
 
     try:
         udev.send_events(key_events)
-        udev.send_events(sync_event)
         if e.value:
             log.info("Caught key: ")
             log.info(key_mapping[0])
