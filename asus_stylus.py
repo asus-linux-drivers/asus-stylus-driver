@@ -38,7 +38,7 @@ while tries > 0:
         for line in lines:
 
             # Look for the stylus
-            if stylus_detected == 0 and ("Name=\"ELAN" in line) and "Stylus" in line:
+            if stylus_detected == 0 and "Stylus" in line:
                 stylus_detected = 1
                 log.debug('Detect stylus from %s', line.strip())
 
