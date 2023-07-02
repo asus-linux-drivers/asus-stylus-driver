@@ -16,7 +16,7 @@ logging.basicConfig()
 log = logging.getLogger('Pen')
 log.setLevel(os.environ.get('LOG', 'INFO'))
 
-layout_name = 'default'
+layout_name = 'SA201H'
 if len(sys.argv) > 1:
     layout_name = sys.argv[1]
 
