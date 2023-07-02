@@ -7,11 +7,11 @@ then
 	exit 1
 fi
 
-if [[ $(sudo apt install 2>/dev/null) ]]; then
+if [[ $(apt install 2>/dev/null) ]]; then
     echo 'apt is here' && sudo apt -y install libevdev2 python3-libevdev git
-elif [[ $(sudo pacman -h 2>/dev/null) ]]; then
+elif [[ $(pacman -h 2>/dev/null) ]]; then
     echo 'pacman is here' && sudo pacman --noconfirm -S libevdev python-libevdev git
-elif [[ $(sudo dnf install 2>/dev/null) ]]; then
+elif [[ $(dnf help 2>/dev/null) ]]; then
     echo 'dnf is here' && sudo dnf -y install libevdev python-libevdev git
 fi
 
