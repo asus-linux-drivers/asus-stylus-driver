@@ -23,7 +23,7 @@ fi
 echo
 echo "Select key mapping layout:"
 echo
-echo "Default mapping is button closer to spike as middle click and second button as right click"
+echo "SA201H mapping is for remapping button closer to spike as middle click and second button as right click"
 echo
 PS3='Please enter your choice '
 options=($(ls stylus_layouts) "Quit")
