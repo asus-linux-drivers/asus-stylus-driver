@@ -5,6 +5,7 @@ import logging
 import os
 import re
 import sys
+from threading import Thread
 from typing import Optional
 
 from libevdev import EV_SYN, EV_MSC, Device, InputEvent
@@ -23,8 +24,8 @@ if len(sys.argv) > 1:
 layout = importlib.import_module('stylus_layouts.'+ layout_name)
 
 # Figure out device from devices file
-stylus: Optional[str] = None
-device_id: Optional[str] = None
+stylus: Optional[list[str]] = []
+device_id: Optional[list[str]] = []
 
 tries = 5
 
@@ -45,45 +46,58 @@ while tries > 0:
             if stylus_detected == 1:
                 if "S: " in line:
                     # search device id
-                    device_id=re.sub(r".*i2c-(\d+)/.*$", r'\1', line).replace("\n", "")
+                    device_id.append(re.sub(r".*i2c-(\d+)/.*$", r'\1', line).replace("\n", ""))
                     log.debug('Set stylus device id %s from %s', device_id, line.strip())
 
                 if "H: " in line:
-                    stylus = line.split("event")[1]
-                    stylus = stylus.split(" ")[0]
-                    stylus_detected = 2
+                    stylus.append(line.split("event")[1]
+                                      .split(" ")[0])
                     log.debug('Set stylus id %s from %s', stylus, line.strip())
+                    stylus_detected = 0
 
-            # Stop looking if stylus have been found
-            if stylus_detected == 2:
-                break
+            # # Stop looking if stylus have been found
+            # if stylus_detected == 2:
+            #     break
+
+    print(f"{stylus = }")
+    if len(stylus) > 0:
+        stylus_detected = 2;
 
     if stylus_detected != 2:
         tries -= 1
         if tries == 0:
             if stylus_detected != 2:
                 log.error("Can't find stylus (code: %s)", stylus_detected)
-            if stylus_detected == 2 and not device_id.isnumeric():
-                log.error("Can't find device id")
+            for device_id_p in device_id:
+                if stylus_detected == 2 and not device_id_p.isnumeric():
+                    log.error("Can't find device id")
             sys.exit(1)
     else:
         break
 
 
 # Start monitoring the stylus
-fd_t = open('/dev/input/event' + str(stylus), 'rb')
-d_t = Device(fd_t)
+fd_t = []
+d_t = []
+for pen in stylus:
+    fd_t.append(open('/dev/input/event' + str(pen), 'rb'))
+    for fd_t_p in fd_t:
+        d_t.append(Device(fd_t_p))
 
 
 # Create a new device
-dev = Device()
-dev.name = "Asus Stylus"
-for key_mapping in layout.keys:
-    dev.enable(key_mapping[2])
-dev.enable(EV_SYN.SYN_REPORT)
-dev.enable(EV_MSC.MSC_SCAN)
+dev = []
+for pen in stylus:
+    dev.append(Device())
 
-udev = dev.create_uinput_device()
+for device in dev:
+    device.name = "Asus Stylus"
+    for key_mapping in layout.keys:
+        device.enable(key_mapping[2])
+    device.enable(EV_SYN.SYN_REPORT)
+    device.enable(EV_MSC.MSC_SCAN)
+
+    udev = device.create_uinput_device()
 
 def pressed_bound_key(e, key_mapping):
     key_events = []
@@ -111,14 +125,19 @@ def pressed_bound_key(e, key_mapping):
     except OSError as e:
         log.error("Cannot send event, %s", e)
 
-while True:
 
-    # If stylus sends something
-    for e in d_t.events():
+def handle_stylus(d_t):
+    while True:
 
-        log.debug(e)
+        # If stylus sends something
+        for e in d_t.events():
+            log.debug(e)
 
-        # Is this event binded to key?
-        for key_mapping in layout.keys:
-            if e.matches(key_mapping[0]):
-                pressed_bound_key(e, key_mapping)
+            # Is this event binded to key?
+            for key_mapping in layout.keys:
+                if e.matches(key_mapping[0]):
+                    pressed_bound_key(e, key_mapping)
+
+for d_t_p in d_t:
+    log.info(f"Started stylus {d_t_p}")
+    Thread(target=handle_stylus, args=(d_t_p,)).start()
