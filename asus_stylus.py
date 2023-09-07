@@ -29,6 +29,7 @@ styluses: Optional[list[str]] = []
 device_ids: Optional[list[str]] = []
 
 tries = 5
+styluses_name = []
 
 # Look into the devices file
 while tries > 0:
@@ -42,6 +43,7 @@ while tries > 0:
             # Look for the stylus
             if stylus_detection_status == 0 and "Stylus" in line:
                 stylus_detection_status = 1
+                styluses_name.append(line.strip().split('"')[1])
                 log.debug('Detect stylus from %s', line.strip())
 
             # Found stylus, now searching for ids
@@ -85,11 +87,11 @@ for stylus in styluses:
 
 # Create a new device
 class StylusInterface():
-    def __init__(self, stylus):
+    def __init__(self, stylus, name):
         self.stylus = stylus
         
         self.device = Device()
-        self.device.name = "Asus Stylus"
+        self.device.name = name
         for key_mapping in layout.keys:
             self.device.enable(key_mapping[2])
         self.device.enable(EV_SYN.SYN_REPORT)
@@ -98,8 +100,8 @@ class StylusInterface():
 
 
 stylus_interfaces = []
-for stylus_device in stylus_devices:
-    stylus_interfaces.append(StylusInterface(stylus_device))
+for i in range(len(stylus_devices)):
+    stylus_interfaces.append(StylusInterface(stylus_devices[i], styluses_name[i]))
 
 
 def pressed_bound_key(event, key_mapping, stylus):
