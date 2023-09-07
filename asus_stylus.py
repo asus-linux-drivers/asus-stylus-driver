@@ -79,8 +79,8 @@ while tries > 0:
 # Start monitoring the stylus
 stylus_devices = []
 for stylus in styluses:
-    file_io = open('/dev/input/event' + str(stylus), 'rb')
-    stylus_devices.append(Device(file_io))
+    fd = open('/dev/input/event' + str(stylus), 'rb')
+    stylus_devices.append(Device(fd))
 
 
 # Create a new device
