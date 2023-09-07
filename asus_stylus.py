@@ -84,17 +84,25 @@ for stylus in styluses:
 
 
 # Create a new device
-for stylus in styluses:
-    device = Device()
-    device.name = "Asus Stylus"
-    for key_mapping in layout.keys:
-        device.enable(key_mapping[2])
-    device.enable(EV_SYN.SYN_REPORT)
-    device.enable(EV_MSC.MSC_SCAN)
+class StylusInterface():
+    def __init__(self, stylus):
+        self.stylus = stylus
+        
+        self.device = Device()
+        self.device.name = "Asus Stylus"
+        for key_mapping in layout.keys:
+            self.device.enable(key_mapping[2])
+        self.device.enable(EV_SYN.SYN_REPORT)
+        self.device.enable(EV_MSC.MSC_SCAN)
+        self.udev = self.device.create_uinput_device()
 
-    udev = device.create_uinput_device()
 
-def pressed_bound_key(event, key_mapping):
+stylus_interfaces = []
+for stylus_device in stylus_devices:
+    stylus_interfaces.append(StylusInterface(stylus_device))
+
+
+def pressed_bound_key(event, key_mapping, stylus):
     key_events = []
     key_events.append(InputEvent(EV_MSC.MSC_SCAN, key_mapping[1]))
     for key in key_mapping[2:]:
@@ -106,7 +114,7 @@ def pressed_bound_key(event, key_mapping):
     key_events = key_events + sync_event
 
     try:
-        udev.send_events(key_events)
+        stylus.udev.send_events(key_events)
         if event.value:
             log.info("Caught key: ")
             log.info(key_mapping[0])
@@ -122,22 +130,22 @@ def pressed_bound_key(event, key_mapping):
 
 
 # Device process behavior
-def handle_device_events(device):
+def handle_interface_events(interface):
     while True:
         # If stylus sends something
-        for event in device.events():
+        for event in interface.stylus.events():
             log.debug(event)
 
             # Is this event binded to key?
             for key_mapping in layout.keys:
                 if event.matches(key_mapping[0]):
-                    pressed_bound_key(event, key_mapping)
+                    pressed_bound_key(event, key_mapping, interface)
 
 # Create and start processes, each device get its own process
 processes = []
-for stylus_device in stylus_devices:
-    log.info(f"Started stylus {stylus_device.name}")
-    process = multiprocessing.Process(target=handle_device_events, args=(stylus_device,), name=stylus_device.name)
+for stylus_interface in stylus_interfaces:
+    log.info(f"Started stylus {stylus_interface.stylus.name}")
+    process = multiprocessing.Process(target=handle_interface_events, args=(stylus_interface,), name=stylus_interface.stylus.name)
     process.start()
     processes.append(process)
 
