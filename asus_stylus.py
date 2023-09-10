@@ -43,7 +43,8 @@ while tries > 0:
             # Look for the stylus
             if stylus_detection_status == 0 and "Stylus" in line:
                 stylus_detection_status = 1
-                styluses_name.append(line.strip().split('"')[1] + str(" (asus-stylus-driver)"))
+                name = line.strip().split('"')[1]
+                styluses_name.append(f"{name} asus-stylus-driver")
                 log.debug('Detect stylus from %s', line.strip())
 
             # Found stylus, now searching for ids
@@ -89,6 +90,7 @@ for stylus in styluses:
 class StylusInterface():
     def __init__(self, stylus, name):
         self.stylus = stylus
+        self.stylus.name = name
         
         self.device = Device()
         self.device.name = name
