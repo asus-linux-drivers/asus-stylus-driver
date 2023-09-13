@@ -18,7 +18,7 @@ If you find the project useful, do not forget to give project a [![GitHub stars]
 
 ## Features
 
-- Laptops with dual screens are supported (credits @Safenein)
+- Laptops with dual screens are supported (credits [@Safenein](https://github.com/Safenein))
 
 ## TODO:
 
