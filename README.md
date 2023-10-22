@@ -58,4 +58,4 @@ Thank you very much [github.com/mohamed-badaoui](github.com/mohamed-badaoui) and
 
 I do not know any.
 
-Why was this project created? As a supplement driver which adds support bind not bound buttons by the origin driver for X11/Wayland and to allows rebind button events on X11 (Wayland does not allow exclusive input device grabbing so key events would be sent 2 times).
+**Why was this project created?** As a supplement driver which adds support bind not bound buttons by the origin driver for X11/Wayland and to allows rebind button events on X11 (Wayland does not allow exclusive input device grabbing so key events would be sent 2 times).
