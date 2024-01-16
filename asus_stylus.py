@@ -63,7 +63,7 @@ while tries > 0:
 
     # Stylus was found on at least one device
     if len(styluses) > 0:
-        stylus_detection_status = 2;
+        stylus_detection_status = 2
 
     # Stylus was not detected?
     if stylus_detection_status != 2:
