@@ -8,7 +8,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fasus-linux-drivers%2Fasus-stylus-driver&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-Supplement driver which adds support bind not bound buttons by the origin driver for X11/Wayland and to allows rebind button events on X11 (Wayland does not allow exclusive input device grabbing so key events would be sent 2 times).
+Supplement driver which adds support bind not bound buttons by the origin driver for X11/Wayland and allows rebind button events.
 
 If you find the project useful, do not forget to give project a [![GitHub stars](https://img.shields.io/github/stars/asus-linux-drivers/asus-stylus-driver.svg?style=flat-square)](https://github.com/asus-linux-drivers/asus-stylus-driver/stargazers) People already did!
 
