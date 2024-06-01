@@ -25,7 +25,7 @@ parser.add_argument('-c', '--config', help='override config file path', type=str
 parser.add_argument('-l', '--layout', help='override layout name', choices=['SA201H'], metavar='name')
 args = parser.parse_args()
 
-config_path = args.config or '/etc/asus-stylus/asus-stylus.ini'
+config_path = args.config or '/etc/asus-stylus/config.ini'
 log.debug(f'Will use config file: {config_path}')
 
 try:
