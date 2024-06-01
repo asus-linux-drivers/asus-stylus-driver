@@ -54,7 +54,7 @@ install -v -Dm644 -t /usr/lib/systemd/system src/asus-stylus.service
 
 echo "Add asus stylus config in /etc/asus-stylus/"
 install -v -dm755 /etc/asus-stylus
-cat src/asus-stylus.ini | LAYOUT=$layout envsubst '$LAYOUT' > /etc/asus-stylus/asus-stylus.ini
+cat src/config.ini | LAYOUT=$layout envsubst '$LAYOUT' > /etc/asus-stylus/config.ini
 
 echo "Add asus stylus in /usr/share/asus-stylus/"
 install -v -Dm644 -t /usr/share/asus-stylus src/asus-stylus.py
