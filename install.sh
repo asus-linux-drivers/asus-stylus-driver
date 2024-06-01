@@ -69,20 +69,20 @@ else
     echo "Systemctl daemon realod called succesfully"
 fi
 
-systemctl enable asus_stylus
+systemctl enable asus-stylus
 
 if [[ $? != 0 ]]
 then
-	echo "Something gone wrong while enabling asus_stylus.service"
+	echo "Something gone wrong while enabling asus-stylus.service"
 	exit 1
 else
 	echo "Asus stylus service enabled"
 fi
 
-systemctl restart asus_stylus
+systemctl restart asus-stylus
 if [[ $? != 0 ]]
 then
-	echo "Something gone wrong while enabling asus_stylus_numpad.service"
+	echo "Something gone wrong while enabling asus-stylus_numpad.service"
 	exit 1
 else
 	echo "Asus stylus service started"
