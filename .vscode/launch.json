@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "asus_stylus",
+            "name": "asus-stylus",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/src/asus_stylus.py",
+            "program": "${workspaceFolder}/src/asus-stylus.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "sudo": true,
