@@ -22,7 +22,7 @@ log.setLevel(os.environ.get('LOG', 'INFO'))
 
 parser = argparse.ArgumentParser('Asus Stylus Driver', description='Asus stylus supplement driver')
 parser.add_argument('-c', '--config', help='override config file path', type=str, metavar='path')
-parser.add_argument('-l', '--layout', help='override layout name', type=str, metavar='name')
+parser.add_argument('-l', '--layout', help='override layout name', choices=['SA201H'], metavar='name')
 args = parser.parse_args()
 
 config_path = args.config or '/etc/asus-stylus/asus-stylus.ini'
