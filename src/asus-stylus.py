@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import argparse
+import configparser
 import importlib
 import logging
 import os
@@ -18,11 +20,35 @@ logging.basicConfig()
 log = logging.getLogger('Pen')
 log.setLevel(os.environ.get('LOG', 'INFO'))
 
-layout_name = 'SA201H'
-if len(sys.argv) > 1:
-    layout_name = sys.argv[1]
+parser = argparse.ArgumentParser('Asus Stylus Driver', description='Asus stylus supplement driver')
+parser.add_argument('-c', '--config', help='override config file path', type=str, metavar='path')
+parser.add_argument('-l', '--layout', help='override layout name', type=str, metavar='name')
+args = parser.parse_args()
 
-layout = importlib.import_module('stylus_layouts.'+ layout_name)
+config_path = args.config or '/etc/asus-stylus/asus-stylus.ini'
+log.debug(f'Will use config file: {config_path}')
+
+try:
+    config = configparser.ConfigParser()
+    config.read(config_path)
+except IOError:
+    log.error(f'Cannot load config file: {config_path}')
+    sys.exit(2) # Missing config file
+
+layout_name = args.layout
+if args.layout is None:
+    try:
+        layout_name = config['Layout']['Name']
+    except KeyError:
+        log.error('Cannot find layout name in config')
+        sys.exit(3) # Incorrect configuration
+
+log.debug(f'Will use layout: {layout_name}')
+try:
+    layout = importlib.import_module('layouts.'+ layout_name)
+except ImportError:
+    log.error(f'Cannot find layout name: {layout_name}')
+    sys.exit(3) # Incorrect configuration
 
 # Figure out device from devices file
 styluses: Optional[list[str]] = []
@@ -91,7 +117,7 @@ class StylusInterface():
     def __init__(self, stylus, name):
         self.stylus = stylus
         self.stylus.name = name
-        
+
         self.device = Device()
         self.device.name = name
         for key_mapping in layout.keys:
