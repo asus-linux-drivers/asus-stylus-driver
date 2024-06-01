@@ -6,38 +6,45 @@ then
 	exit 1
 fi
 
-systemctl stop asus_stylus
+systemctl stop asus-stylus
 if [[ $? != 0 ]]
 then
-	echo "asus_stylus.service cannot be stopped correctly..."
+	echo "asus-stylus.service cannot be stopped correctly..."
 	exit 1
 fi
 
-systemctl disable asus_stylus
+systemctl disable asus-stylus
 if [[ $? != 0 ]]
 then
-	echo "asus_stylus.service cannot be disabled correctly..."
+	echo "asus-stylus.service cannot be disabled correctly..."
 	exit 1
 fi
 
-rm -f /lib/systemd/system/asus_stylus.service
+rm -f /usr/lib/systemd/system/asus-stylus.service
 if [[ $? != 0 ]]
 then
-	echo "/lib/systemd/system/asus_stylus.service cannot be removed correctly..."
+	echo "/usr/lib/systemd/system/asus-stylus.service cannot be removed correctly..."
 	exit 1
 fi
 
-rm -rf /usr/share/asus_stylus-driver/
+rm -rf /etc/asus-stylus/
 if [[ $? != 0 ]]
 then
-	echo "/usr/share/asus_stylus-driver/ cannot be removed correctly..."
+	echo "/etc/asus-stylus/ cannot be removed correctly..."
 	exit 1
 fi
 
-rm -rf /var/log/asus_stylus-driver
+rm -rf /usr/share/asus-stylus/
 if [[ $? != 0 ]]
 then
-	echo "/var/log/asus_stylus-driver cannot be removed correctly..."
+	echo "/usr/share/asus-stylus/ cannot be removed correctly..."
+	exit 1
+fi
+
+rm -rf /var/log/asus-stylus
+if [[ $? != 0 ]]
+then
+	echo "/var/log/asus-stylus cannot be removed correctly..."
 	exit 1
 fi
 
