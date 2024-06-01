@@ -49,13 +49,16 @@ do
     fi
 done
 
-echo "Add asus stylus service in /etc/systemd/system/"
-cat asus_stylus.service | LAYOUT=$layout envsubst '$LAYOUT' > /etc/systemd/system/asus_stylus.service
+echo "Add asus stylus service in /usr/lib/systemd/system/"
+install -Dm644 -t /usr/lib/systemd/system src/asus-stylus.service
 
-mkdir -p /usr/share/asus_stylus-driver/stylus_layouts
-mkdir -p /var/log/asus_stylus-driver
-install asus_stylus.py /usr/share/asus_stylus-driver/
-install -t /usr/share/asus_stylus-driver/stylus_layouts stylus_layouts/*.py
+echo "Add asus stylus config in /etc/asus-stylus/"
+cat src/asus-stylus.ini | LAYOUT=$layout envsubst '$LAYOUT' > /etc/asus-stylus/asus-stylus.ini
+
+echo "Add asus stylus in /usr/share/asus-stylus/"
+install -Dm644 -t /usr/share/asus-stylus src/asus-stylus.py
+install -Dm644 -t /usr/share/asus-stylus/layouts src/layouts/*
+install -dm755 /var/log/asus-stylus
 
 systemctl daemon-reload
 
