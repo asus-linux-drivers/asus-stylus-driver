@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 /usr/lib/asus-stylus/asus-stylus.py $@

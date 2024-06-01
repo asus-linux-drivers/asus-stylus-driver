@@ -3,7 +3,7 @@ Description=Asus Stylus Handler
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/env python3 /usr/share/asus-stylus/asus-stylus.py
+ExecStart=/usr/bin/asus-stylus
 StandardInput=tty-force
 StandardOutput=append:/var/log/asus-stylus/error.log
 StandardError=append:/var/log/asus-stylus/error.log

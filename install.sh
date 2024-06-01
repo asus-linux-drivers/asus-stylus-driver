@@ -37,12 +37,12 @@ do
     for option in $(ls src/layouts);
     do
         if [ "$option" = "$selected_opt" ] ; then
-            model=${selected_opt::-3}
+            layout=${selected_opt%.py}
             break
         fi
     done
 
-    if [ -z "$model" ] ; then
+    if [ -z "$layout" ] ; then
         echo "invalid option $REPLY"
     else
         break
@@ -56,10 +56,13 @@ echo "Add asus stylus config in /etc/asus-stylus/"
 install -v -dm755 /etc/asus-stylus
 cat src/config.ini | LAYOUT=$layout envsubst '$LAYOUT' > /etc/asus-stylus/config.ini
 
-echo "Add asus stylus in /usr/share/asus-stylus/"
-install -v -Dm644 -t /usr/share/asus-stylus src/asus-stylus.py
-install -v -Dm644 -t /usr/share/asus-stylus/layouts src/layouts/*
+echo "Add asus stylus in /usr/lib/asus-stylus/"
+install -v -Dm644 -t /usr/lib/asus-stylus src/asus-stylus.py
+install -v -Dm644 -t /usr/lib/asus-stylus/layouts src/layouts/*
 install -v -dm755 /var/log/asus-stylus
+
+echo "Add asus stylus binary in /usr/bin/"
+install -v -Dm755 -t /usr/bin src/asus-stylus
 
 systemctl daemon-reload
 
@@ -90,4 +93,3 @@ else
 fi
 
 exit 0
-

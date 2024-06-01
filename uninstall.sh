@@ -27,6 +27,13 @@ then
 	exit 1
 fi
 
+rm -f /usr/bin/asus-stylus
+if [[ $? != 0 ]]
+then
+	echo "/usr/bin/asus-stylus cannot be removed correctly..."
+	exit 1
+fi
+
 rm -rf /etc/asus-stylus/
 if [[ $? != 0 ]]
 then
@@ -34,10 +41,10 @@ then
 	exit 1
 fi
 
-rm -rf /usr/share/asus-stylus/
+rm -rf /usr/lib/asus-stylus/
 if [[ $? != 0 ]]
 then
-	echo "/usr/share/asus-stylus/ cannot be removed correctly..."
+	echo "/usr/lib/asus-stylus/ cannot be removed correctly..."
 	exit 1
 fi
 
