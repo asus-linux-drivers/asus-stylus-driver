@@ -24,9 +24,23 @@ If you find the project useful, do not forget to give project a [![GitHub stars]
 
 - [ ] (Do not display battery low 1%, https://gitlab.gnome.org/GNOME/gnome-power-manager/-/issues/23)
 
-<br/>
+## Setup
 
-You can get the latest ASUS Stylus Driver for Linux from Git and install it using the following commands.
+### Requirements
+
+- Python 3
+- libevdev
+
+### Distro package
+
+- Arch Linux (AUR):
+	- [stable package](https://aur.archlinux.org/packages/asus-stylus-driver)
+	- [git package](https://aur.archlinux.org/packages/asus-stylus-driver-git)
+
+### Manual
+
+> [!IMPORTANT]
+> Install script is intended for Debian, Arch and Fedora based distros.
 
 ```
 git clone https://github.com/asus-linux-drivers/asus-stylus-driver
@@ -39,11 +53,11 @@ To uninstall, just run:
 sudo ./uninstall.sh
 ```
 
-**Troubleshooting**
+## Troubleshooting
 
 To activate logger, do in a console:
 ```
-LOG=DEBUG sudo -E ./asus_stylus.py
+sudo LOG=DEBUG asus-stylus
 ```
 
 ## Credits
