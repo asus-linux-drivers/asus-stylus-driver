@@ -20,35 +20,35 @@ then
 	exit 1
 fi
 
-rm -f /usr/lib/systemd/system/asus-stylus.service
+rm -vf /usr/lib/systemd/system/asus-stylus.service
 if [[ $? != 0 ]]
 then
 	echo "/usr/lib/systemd/system/asus-stylus.service cannot be removed correctly..."
 	exit 1
 fi
 
-rm -f /usr/bin/asus-stylus
+rm -vf /usr/bin/asus-stylus
 if [[ $? != 0 ]]
 then
 	echo "/usr/bin/asus-stylus cannot be removed correctly..."
 	exit 1
 fi
 
-rm -rf /etc/asus-stylus/
+rm -vrf /etc/asus-stylus/
 if [[ $? != 0 ]]
 then
 	echo "/etc/asus-stylus/ cannot be removed correctly..."
 	exit 1
 fi
 
-rm -rf /usr/lib/asus-stylus/
+rm -vrf /usr/lib/asus-stylus/
 if [[ $? != 0 ]]
 then
 	echo "/usr/lib/asus-stylus/ cannot be removed correctly..."
 	exit 1
 fi
 
-rm -rf /var/log/asus-stylus
+rm -vrf /var/log/asus-stylus
 if [[ $? != 0 ]]
 then
 	echo "/var/log/asus-stylus cannot be removed correctly..."
