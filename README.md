@@ -57,7 +57,11 @@ sudo ./uninstall.sh
 
 To activate logger, do in a console:
 ```
-sudo LOG=DEBUG asus-stylus
+# local scipt
+LOG=DEBUG sudo -E ./src/asus-stylus.py
+
+# global script
+LOG=DEBUG sudo -E asus-stylus
 ```
 
 ## Credits
