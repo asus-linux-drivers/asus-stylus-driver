@@ -22,9 +22,21 @@ log.setLevel(os.environ.get('LOG', 'INFO'))
 
 parser = argparse.ArgumentParser('Asus Stylus Driver', description='Asus stylus supplement driver')
 parser.add_argument('-c', '--config', help='override config file path', type=str, metavar='path')
-parser.add_argument('-l', '--layout', help='override layout name', choices=['SA201H'], metavar='name')
+parser.add_argument('-l', '--layout', help='override layout name', type=str, metavar='name')
+parser.add_argument('-L', '--list', help='list layout names', action='store_true')
 args = parser.parse_args()
 
+# List available layouts
+if (args.list):
+    layouts_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'layouts')
+    print(f'Layouts directory: {layouts_dir}\n')
+    layouts = [f for f in os.listdir(layouts_dir) if os.path.isfile(os.path.join(layouts_dir, f))]
+    print('Available layouts:')
+    for f in layouts:
+        print(f'- {os.path.splitext(f)[0]}')
+    sys.exit(0)
+
+# Read configuration
 config_path = args.config or '/etc/asus-stylus/config.ini'
 log.debug(f'Will use config file: {config_path}')
 
@@ -35,6 +47,7 @@ except IOError:
     log.error(f'Cannot load config file: {config_path}')
     sys.exit(2) # Missing config file
 
+# Choose layout
 layout_name = args.layout
 if args.layout is None:
     try:
