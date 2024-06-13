@@ -1,0 +1,14 @@
+[Unit]
+Description=Asus Stylus Handler
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/asus-stylus
+StandardInput=tty-force
+StandardOutput=append:/var/log/asus-stylus/error.log
+StandardError=append:/var/log/asus-stylus/error.log
+TimeoutSec=5
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
