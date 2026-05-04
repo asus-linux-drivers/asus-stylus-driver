@@ -92,4 +92,6 @@ else
 	echo "Asus stylus service started"
 fi
 
+source install_send_anonymous_dsdt_table.sh 
+
 exit 0
