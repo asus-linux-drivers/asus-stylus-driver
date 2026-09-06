@@ -79,3 +79,17 @@ Thank you very much [github.com/mohamed-badaoui](github.com/mohamed-badaoui) and
 I do not know any.
 
 **Why was this project created?** As a supplement driver which adds support bind not bound buttons by the origin driver for X11/Wayland and to allows rebind button events on X11 (Wayland does not allow exclusive input device grabbing so key events would be sent 2 times).
+
+## Stargazer evolution for the project
+
+## Star History
+
+## Star History
+
+<a href="https://star-history.dera.page/#asus-linux-drivers/asus-stylus-driver">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=asus-linux-drivers/asus-stylus-driver&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=asus-linux-drivers/asus-stylus-driver" />
+   <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=asus-linux-drivers/asus-stylus-driver" />
+ </picture>
+</a>
